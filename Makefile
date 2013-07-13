@@ -2,6 +2,11 @@ BOOTSTRAP = ./docs/assets/css/bootstrap.css
 BOOTSTRAP_LESS = ./less/bootstrap.less
 BOOTSTRAP_RESPONSIVE = ./docs/assets/css/bootstrap-responsive.css
 BOOTSTRAP_RESPONSIVE_LESS = ./less/responsive.less
+
+TL_BOOTSTRAP = ./docs/assets/css/tl-bootstrap.css
+TL_BOOTSTRAP_LESS = ./less/tl-bootstrap.less
+TL_BOOTSTRAP_RESPONSIVE = ./docs/assets/css/tl-bootstrap-responsive.css
+TL_BOOTSTRAP_RESPONSIVE_LESS = ./less/tl-responsive.less
 DATE=$(shell date +%I:%M%p)
 CHECK=\033[32m✔\033[39m
 HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
@@ -20,6 +25,8 @@ build:
 	@echo "Running JSHint on javascript...             ${CHECK} Done"
 	@./node_modules/.bin/recess --compile ${BOOTSTRAP_LESS} > ${BOOTSTRAP}
 	@./node_modules/.bin/recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > ${BOOTSTRAP_RESPONSIVE}
+	@./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_LESS} > ${TL_BOOTSTRAP}
+	@./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_RESPONSIVE_LESS} > ${TL_BOOTSTRAP_RESPONSIVE}	
 	@echo "Compiling LESS with Recess...               ${CHECK} Done"
 	@node docs/build
 	@cp img/* docs/assets/img/
@@ -107,8 +114,16 @@ bootstrap/img/*: img/*
 # recess & uglifyjs are required
 #
 
-tl-bootstrap: tl-bootstrap-img tl-bootstrap-css tl-bootstrap-js
+tl-bootstrap: tl-bootstrap-clean tl-bootstrap-img tl-bootstrap-css tl-bootstrap-js
 
+#
+# DIST CLEAN
+#
+
+tl-bootstrap-clean:
+	rm -f tl-bootstrap/img/*
+	rm -f tl-bootstrap/css/*
+	rm -f tl-bootstrap/js/*
 
 #
 # JS COMPILE
@@ -131,10 +146,10 @@ tl-bootstrap-css: tl-bootstrap/css/*.css
 
 tl-bootstrap/css/*.css: less/*.less
 	mkdir -p tl-bootstrap/css
-	./node_modules/.bin/recess --compile ${BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.css
-	./node_modules/.bin/recess --compress ${BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.min.css
-	./node_modules/.bin/recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.css
-	./node_modules/.bin/recess --compress ${BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.min.css
+	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.css
+	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.min.css
+	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.css
+	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.min.css
 
 #
 # IMAGES
