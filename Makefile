@@ -103,6 +103,51 @@ bootstrap/img/*: img/*
 
 
 #
+# BUILD TOMATO LABS BOOTSTRAP DIRECTORY
+# recess & uglifyjs are required
+#
+
+tl-bootstrap: tl-bootstrap-img tl-bootstrap-css tl-bootstrap-js
+
+
+#
+# JS COMPILE
+#
+tl-bootstrap-js: tl-bootstrap/js/*.js
+
+tl-bootstrap/js/*.js: js/*.js
+	mkdir -p tl-bootstrap/js
+	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > tl-bootstrap/js/tl-bootstrap.js
+	./node_modules/.bin/uglifyjs -nc tl-bootstrap/js/tl-bootstrap.js > tl-bootstrap/js/tl-bootstrap.min.tmp.js
+	echo "/*!\n* Bootstrap.js by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > tl-bootstrap/js/copyright.js
+	cat tl-bootstrap/js/copyright.js tl-bootstrap/js/tl-bootstrap.min.tmp.js > tl-bootstrap/js/tl-bootstrap.min.js
+	rm tl-bootstrap/js/copyright.js tl-bootstrap/js/tl-bootstrap.min.tmp.js
+
+#
+# CSS COMPLILE
+#
+
+tl-bootstrap-css: tl-bootstrap/css/*.css
+
+tl-bootstrap/css/*.css: less/*.less
+	mkdir -p tl-bootstrap/css
+	./node_modules/.bin/recess --compile ${BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.css
+	./node_modules/.bin/recess --compress ${BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.min.css
+	./node_modules/.bin/recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.css
+	./node_modules/.bin/recess --compress ${BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.min.css
+
+#
+# IMAGES
+#
+
+tl-bootstrap-img: tl-bootstrap/img/*
+
+tl-bootstrap/img/*: img/*
+	mkdir -p tl-bootstrap/img
+	cp img/* tl-bootstrap/img/
+
+
+#
 # MAKE FOR GH-PAGES 4 FAT & MDO ONLY (O_O  )
 #
 
