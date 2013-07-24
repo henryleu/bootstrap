@@ -114,52 +114,52 @@ bootstrap/img/*: img/*
 # recess & uglifyjs are required
 #
 
-tl-bootstrap: tl-bootstrap-clean tl-bootstrap-img tl-bootstrap-css tl-bootstrap-js
+tl: tl-clean tl-img tl-css tl-js
 
 #
 # DIST CLEAN
 #
 
-tl-bootstrap-clean:
-	rm -f tl-bootstrap/img/*
-	rm -f tl-bootstrap/css/*
-	rm -f tl-bootstrap/js/*
+tl-clean:
+	rm -f tl/img/*
+	rm -f tl/css/*
+	rm -f tl/js/*
 
 #
 # JS COMPILE
 #
-tl-bootstrap-js: tl-bootstrap/js/*.js
+tl-js: tl/js/*.js
 
-tl-bootstrap/js/*.js: js/*.js
-	mkdir -p tl-bootstrap/js
-	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > tl-bootstrap/js/tl-bootstrap.js
-	./node_modules/.bin/uglifyjs -nc tl-bootstrap/js/tl-bootstrap.js > tl-bootstrap/js/tl-bootstrap.min.tmp.js
-	echo "/*!\n* Bootstrap.js by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > tl-bootstrap/js/copyright.js
-	cat tl-bootstrap/js/copyright.js tl-bootstrap/js/tl-bootstrap.min.tmp.js > tl-bootstrap/js/tl-bootstrap.min.js
-	rm tl-bootstrap/js/copyright.js tl-bootstrap/js/tl-bootstrap.min.tmp.js
+tl/js/*.js: js/*.js
+	mkdir -p tl/js
+	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > tl/js/bootstrap.js
+	./node_modules/.bin/uglifyjs -nc tl/js/bootstrap.js > tl/js/bootstrap.min.tmp.js
+	echo "/*!\n* Bootstrap.js by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > tl/js/copyright.js
+	cat tl/js/copyright.js tl/js/bootstrap.min.tmp.js > tl/js/bootstrap.min.js
+	rm tl/js/copyright.js tl/js/bootstrap.min.tmp.js
 
 #
 # CSS COMPLILE
 #
 
-tl-bootstrap-css: tl-bootstrap/css/*.css
+tl-css: tl/css/*.css
 
-tl-bootstrap/css/*.css: less/*.less
-	mkdir -p tl-bootstrap/css
-	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.css
-	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_LESS} > tl-bootstrap/css/tl-bootstrap.min.css
-	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.css
-	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl-bootstrap/css/tl-bootstrap-responsive.min.css
+tl/css/*.css: less/*.less
+	mkdir -p tl/css
+	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_LESS} > tl/css/bootstrap.css
+	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_LESS} > tl/css/bootstrap.min.css
+	./node_modules/.bin/recess --compile ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl/css/bootstrap-responsive.css
+	./node_modules/.bin/recess --compress ${TL_BOOTSTRAP_RESPONSIVE_LESS} > tl/css/bootstrap-responsive.min.css
 
 #
 # IMAGES
 #
 
-tl-bootstrap-img: tl-bootstrap/img/*
+tl-img: tl/img/*
 
-tl-bootstrap/img/*: img/*
-	mkdir -p tl-bootstrap/img
-	cp img/* tl-bootstrap/img/
+tl/img/*: img/*
+	mkdir -p tl/img
+	cp img/* tl/img/
 
 
 #
